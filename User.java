@@ -6,11 +6,12 @@
 package mainPackage;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javafx.scene.control.Alert;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -20,9 +21,11 @@ public class User {
     
     Connector connector = new Connector();
     Connection conn = null;
+    
     private String username;
     private String password;
 
+    
     public User() {
     }
 
@@ -35,6 +38,10 @@ public class User {
         this.password = password;
     }
 
+    public User(User user){
+        this.username = user.username;
+        this.password = user.password;
+    }
     public String getPassword() {
         return password;
     }
@@ -57,44 +64,68 @@ public class User {
                     user.getUsername().equals(this.username);
         }
     }
+    /*
+    time ve date değişkenlerinin alınması 
+    doğru formatta yazılabilmesi için yardımcı ögeler
+    */
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    
+    LocalDate localDate = LocalDate.now();
+    
+    LocalTime time = LocalTime.now();
+    
+    //check in saati aynı date var ise değişmez
+    /*
+    kullanıcı giriş isteğinde bulunduğunda kullanılacak fonksiyon
+    sonucunda kullanıcının vt de olup olmama durumuna göre true ya da false döndürür
+    eğer kullanıcı var ise; giriş yapılan gün saat bilgileri de vt ye kaydedilir
+    default olarak ilk anda giriş ve çıkış verileri, şu ana eşittir
+    daha sonra çıkış butonuna basıldığında check_out kısmına güncelleme yapılır
+    */
     public boolean exists() throws SQLException{
+        //sql e komut bildirecek olan değişken, null olarak atandı
         Statement stmt = null;
         try {
+            //sql e bağlantı sağlanıyor
             conn = connector.createConn();
             stmt = conn.createStatement();
+            /*
+            fonksiyon user nesnesi ile çalıştığından
+            getUsername ile içinde bulunulan username alınır
+            buna eşit olan sql verileri toplanır
+            */
             String sql = "SELECT * FROM userList WHERE username='" + getUsername() + "';";
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){
+                //eğer username ve password değişkenleri var ve;
                 String username = rs.getString("username");
                 String password = rs.getString("password");
+                //bu değişkenler doğru ise
                 if(username.equals(getUsername()) &&
                         password.equals(getPassword())){
+                    String controlSql = "SELECT username FROM userinformation WHERE username ='"
+                            + getUsername() + "' AND dateTime='" +
+                            dtf.format(localDate) + "';";
+                    ResultSet newRs = stmt.executeQuery(controlSql);
+                    /*
+                    eğer aynı gün içinde kullanıcı daha once giriş yapmış ise
+                    check_in değişmez, daha once giriş durumunu anlamak için
+                    isBeforeFirst metodu kullanıldı, eğer yapılmadıysa
+                    ilk değer olarak hem check_in hem de check_out kısmına 
+                    su anı temsil eden saat atıldı
+                    */
+                    if(!newRs.isBeforeFirst()){
+                        String sql1 = "INSERT INTO userInformation VALUES('" + getUsername() + "','"
+                            + dtf.format(localDate) + "','" + time + "','" + time + "');";
+                        stmt.executeUpdate(sql1);
+                    }
                     return true;
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        //kullanıcı bulunamadığı durum
         return false;
     }
-    public boolean control(User user){
-        Statement stmt = null;
-        try {
-            conn = connector.createConn();
-            stmt = conn.createStatement();
-            String sql = "SELECT * FROM userList WHERE username='" + user.getUsername() + "';";
-            ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()){
-                String username = rs.getString("username");
-                if(username.equals(user.getUsername())){
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-    
-    
 }

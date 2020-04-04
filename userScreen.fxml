@@ -1,26 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="userAnchor" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.MainScreenController"> 
+<AnchorPane id="AnchorPane" fx:id="userAnchor" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1d1d1d;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.UserScreenController"> 
    <children>
-      <Label layoutX="14.0" layoutY="61.0" prefHeight="30.0" prefWidth="140.0" text="Enter the patient ID :" />
-      <Label layoutX="14.0" layoutY="96.0" prefHeight="30.0" prefWidth="140.0" text="Enter the recipe code :" />
-      <TextField fx:id="id" layoutX="179.0" layoutY="64.0" />
-      <TextField fx:id="code" layoutX="179.0" layoutY="99.0" />
-      <CheckBox fx:id="male" layoutX="180.0" layoutY="140.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="Male" />
-      <CheckBox fx:id="female" layoutX="255.0" layoutY="140.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="Female" />
-      <Button fx:id="save" layoutX="293.0" layoutY="249.0" mnemonicParsing="false" onAction="#saveRecord" text="Save" />
-      <Button fx:id="exit" layoutX="14.0" layoutY="249.0" mnemonicParsing="false" onAction="#exitUserAct" text="Exit" />
-      <Label layoutX="14.0" layoutY="135.0" prefHeight="30.0" prefWidth="75.0" text="Gender :" />
-      <Label layoutX="14.0" layoutY="165.0" prefHeight="30.0" prefWidth="75.0" text="Age :" />
-      <TextField fx:id="age" layoutX="179.0" layoutY="168.0" />
-      <Label layoutX="12.0" layoutY="195.0" prefHeight="30.0" prefWidth="75.0" text="Recovered :" />
-      <CheckBox fx:id="recovered" layoutX="179.0" layoutY="202.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="35.0" />
-      <Button fx:id="update" layoutX="179.0" layoutY="249.0" mnemonicParsing="false" onAction="#updateRecord" text="Update" />
+      <Label layoutX="102.0" layoutY="117.0" prefHeight="30.0" prefWidth="185.0" style="-fx-border-color: #326ba8;" text="Enter the patient ID :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Label>
+      <Label layoutX="102.0" layoutY="154.0" prefHeight="30.0" prefWidth="185.0" style="-fx-border-color: #326ba8;" text="Enter the recipe code :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Label>
+      <TextField fx:id="id" layoutX="321.0" layoutY="122.0" />
+      <TextField fx:id="code" layoutX="321.0" layoutY="156.0" />
+      <CheckBox fx:id="male" layoutX="321.0" layoutY="200.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="Male" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></CheckBox>
+      <CheckBox fx:id="female" layoutX="396.0" layoutY="200.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="75.0" text="Female" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font></CheckBox>
+      <Button fx:id="save" layoutX="434.0" layoutY="334.0" mnemonicParsing="false" onAction="#saveRecord" style="-fx-background-color: grey; -fx-background-radius: 60;" text="Save" />
+      <Button fx:id="exit" layoutX="102.0" layoutY="334.0" mnemonicParsing="false" onAction="#exitUserAct" style="-fx-background-color: grey; -fx-background-radius: 60;" text="Exit" />
+      <Label layoutX="102.0" layoutY="195.0" prefHeight="30.0" prefWidth="185.0" style="-fx-border-color: #326ba8;" text="Gender :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets></Label>
+      <Label layoutX="102.0" layoutY="236.0" prefHeight="30.0" prefWidth="185.0" style="-fx-border-color: #326ba8;" text="Age :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Label>
+      <TextField fx:id="age" layoutX="321.0" layoutY="238.0" />
+      <Label layoutX="102.0" layoutY="269.0" prefHeight="30.0" prefWidth="185.0" style="-fx-border-color: #326ba8;" text="Recovered :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Label>
+      <CheckBox fx:id="recovered" layoutX="321.0" layoutY="274.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="35.0" />
+      <Button fx:id="update" layoutX="321.0" layoutY="334.0" mnemonicParsing="false" onAction="#updateRecord" style="-fx-background-color: grey; -fx-background-radius: 60;" text="Update" />
+      <Label fx:id="userPanel" alignment="CENTER" layoutX="169.0" layoutY="65.0" prefHeight="30.0" prefWidth="237.0" text="USER PANEL" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label alignment="CENTER" layoutX="127.0" layoutY="14.0" prefHeight="30.0" prefWidth="320.0" text="WELCOME" textFill="#326ba8">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
    </children>
 </AnchorPane>

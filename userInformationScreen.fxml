@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" fx:id="userInfoAnchor" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1d1d1d;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="mainPackage.UserInformationScreenController">
+   <children>
+      <Label layoutX="44.0" layoutY="203.0" prefHeight="30.0" prefWidth="180.0" text="Enter the user-name :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="importUserHours" layoutX="465.0" layoutY="206.0" mnemonicParsing="false" onAction="#importUserHoursAct" style="-fx-background-color: grey;" text="Import User Hours" />
+      <TextField fx:id="getUserNameInfo" layoutX="300.0" layoutY="206.0" />
+      <Label layoutX="44.0" layoutY="148.0" prefHeight="30.0" prefWidth="400.0" text="For all working hours  ===================&gt;" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="importAllHours" layoutX="464.0" layoutY="151.0" mnemonicParsing="false" onAction="#importAllHoursAct" prefHeight="25.0" prefWidth="114.0" style="-fx-background-color: grey;" text="Import All Hours" />
+      <Label layoutX="44.0" layoutY="258.0" prefHeight="30.0" prefWidth="245.0" text="Enter the date for information:" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="importDateHours" layoutX="464.0" layoutY="261.0" mnemonicParsing="false" onAction="#importDateHoursAct" style="-fx-background-color: GREY;" text="Import Date Hours" />
+      <TextField fx:id="getDateInfo" layoutX="300.0" layoutY="261.0" />
+      <Label alignment="CENTER" layoutX="195.0" layoutY="33.0" prefHeight="42.0" prefWidth="210.0" text="ADMINISTIRATION" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="back" layoutX="537.0" layoutY="322.0" mnemonicParsing="false" onAction="#turnBack" style="-fx-background-color: grey; -fx-background-radius: 60;" text="Back" />
+   </children>
+</AnchorPane>

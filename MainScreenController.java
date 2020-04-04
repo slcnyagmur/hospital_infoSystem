@@ -9,19 +9,18 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.net.URL;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -35,142 +34,135 @@ public class MainScreenController implements Initializable {
     Connector connector = new Connector();
     private Connection conn;
     private Statement stmt = null;
-    private Admin admin = new Admin();
+    private User User;
     
-    @FXML
-    private TextField code;
-
-    @FXML
-    private Button save;
-
-    @FXML
-    private Button update;
-    
-    @FXML
-    private TextField id;
-    
-    @FXML
-    private Button exit;
-    
+    //çıkış butonu
     @FXML
     private Button exitMain;
-    
-    @FXML
-    private AnchorPane userAnchor;
- 
-    @FXML
-    private CheckBox female;
-
-    @FXML
-    private CheckBox male;
-    
-    @FXML
-    private AnchorPane anchor;
-    
-    @FXML
-    private PasswordField pass;
-
-    @FXML
-    private TextField age;
-    
+    //giriş butonu
     @FXML
     private Button logIn;
-
+    //Anchor pane sınıfı en rahat kullanıma sahip olduğu için 
+    //anchor pane kullanıldı, anchor nesnesi
+    @FXML
+    private AnchorPane anchor;
+    //şifre alanı, şifre yazılırken yazılar noktalanır
+    @FXML
+    private PasswordField pass;
+    //kullanıcı adı alanı
     @FXML
     private TextField user;
-    
+    //giriş yapan kullanıcının adını gösteren label
     @FXML
-    private CheckBox recovered;
+    private Label userPanel = new Label();
     
-
     @FXML
     void logInAct(ActionEvent event) throws SQLException, IOException {
+        /*
+        ileriki aşamada admin veya user olma durumuna göre
+        geçiş yapılacak olan screen i parametre olarak alacak olan
+        node nesnesi
+        */
         Node node = null;
+        /*
+        text in null olup olmama durumunun kontrolü
+        */
         if(user.getText() == null || pass.getText() == null){
             //error
         }
-        String username = user.getText();
-        String password = pass.getText();
-        User User = new User(username, password);
-        if(username.equals(admin.getUsername()) && password.equals(admin.getPassword())){
-            node = FXMLLoader.load(getClass().getResource("adminScreen.fxml"));
-            anchor.getChildren().setAll(node);
+        /*
+        text in alınıp kullanıcı adı ve şifre yerine yazılması
+        giriş yapmaya yetkisi olduğu kesinleşmiş nesnenin
+        user olduğu kesin olduğu için User sınıfından user nesnesi oluşturuldu
+        parametre olarak username ve password atandı
+        */
+        String getUsername = user.getText();
+        String getPassword = pass.getText();
+        User User = new User(getUsername, getPassword);
+        String password = null;
+        /*
+        adminin giriş yapması durumunda
+        şifre kontrolü userlist isimli sql den çekilerek yapılır
+        */
+        if(getUsername.equalsIgnoreCase("admin")){
+            String sql = "SELECT password FROM userlist WHERE username='admin'";
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                password = rs.getString("password");
+            }
+            /*
+            şifre doğru ise adminScreen fxml ine geçiş yapılır
+            */
+            if(getPassword.equals(password)){
+                node = FXMLLoader.load(getClass().getResource("adminScreen.fxml"));
+                anchor.getChildren().setAll(node);
+            }
+            /*
+            şifrenin yanlış girildiğinin anlaşılması için konsola bastırdım
+            bu silinebilir...
+            */
+            else{
+                System.out.println("false");
+            }
         }
+        /*
+        eğer giriş yapan nesne sql içerisinde var ise
+        userScreen fxml ine geçiş yapılır
+        */
         else if(User.exists()){
-            node = FXMLLoader.load(getClass().getResource("userScreen.fxml"));
-            anchor.getChildren().setAll(node);
+            /*
+            buradaki loader ve root nesneleri
+            FXML ekranının yönlendirilmesi için kullanılıyor, bunlar sabit
+            */
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("userScreen.fxml"));
+            AnchorPane root = loader.load();
+            /*
+            burada oluşturduğum userScreenController sınıfından bir controller
+            nesnesi oluşturdum
+            amacım userScreen fxml inde görünecek olan, kullanıcının adını gösteren
+            labelin içerisine giriş yapan kullanıcının adının yazılması
+            (setUser metodu ile, bu metod o sınıfın içerisinde)
+            */
+            UserScreenController controller = loader.<UserScreenController>getController();
+            controller.setUser(User);
+            anchor.getChildren().setAll(root);
         }
+        /*
+        giriş reddedildiğinde yine konsola false yazısı
+        */
         else{
             System.out.println("false");
         }
+        /*
+        tekrardan ana ekrana dönme durumunda 
+        kullanıcı adı ve şifre alanlarının sıfırlanması
+        */
         user.clear();
         pass.clear();
     }
+    /*
+    ana ekrandan çıkış : sistem sonlandırılıyor
+    */
     @FXML
-    void exitProgram(ActionEvent event) {
+    void exitProgram(ActionEvent event) throws SQLException {
         System.exit(0);
     }
-    
-    @FXML
-    void saveRecord(ActionEvent event) throws SQLException {
+    /*
+    diğer controller sınıflarındaki ortak bileşenler
+    */
+    private void fixConnection() throws SQLException{
         conn = connector.createConn();
         stmt = conn.createStatement();
-        if(id.getText() == null || code.getText() == null){
-            //error
-        }
-        String gender = null;
-        String recover = null;
-        String ID = id.getText();
-        String recipeCode = code.getText();
-        Patient patient = new Patient(ID, recipeCode);
-        if(patient.exists()){
-            
-            return;
-        }
-        if(male.isSelected()) gender = "Male";
-        else if(female.isSelected()) gender = "Female";
-        else{ /* not selected error */}
-        if(recovered.isSelected()) recover = "Yes";
-        else if(!recovered.isSelected()) recover = "No";
-        String recipeType = patient.getRecipeType(recipeCode);
-        int Age = Integer.parseInt(age.getText());
-        String sql = "INSERT INTO INFORMATIONTABLE VALUES('" + gender + "'" + 
-                ",'" + recipeType + "'" + ",'" + Age + "')";
-        Statement newStmt = conn.createStatement();
-        newStmt.executeUpdate(sql);
-        patient.insert(recover);
-        
-        //işlem bittikten sonra sıfırlama
-        age.clear();male.setSelected(false);female.setSelected(false);
-        id.clear();code.clear();recovered.setSelected(false);
-        newStmt.close();
     }
     
-    @FXML
-    void updateRecord(ActionEvent event) throws SQLException {
-        String recover = null;
-        String ID = id.getText();
-        if(recovered.isSelected()) recover = "Yes";
-        else if(!recovered.isSelected()) recover = "No";
-        Patient patient = new Patient(ID);
-        if(!patient.exists()){
-            
-            return;
-        }
-        patient.update(recover);
-        id.clear();recovered.setSelected(false);
-    }
-    @FXML
-    void exitUserAct(ActionEvent event) throws IOException {
-        Node node = FXMLLoader.load(getClass().getResource("mainScreen.fxml"));
-        userAnchor.getChildren().setAll(node);
-    }
-    
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-       
-    }    
-    
+        try {
+            // TODO
+            fixConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(MainScreenController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }  
 }
+    

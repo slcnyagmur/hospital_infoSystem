@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.web.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.MainScreenController">
+<AnchorPane id="AnchorPane" fx:id="anchor" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1d1d1d;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.MainScreenController">
    <children>
-      <Label layoutX="28.0" layoutY="75.0" prefHeight="30.0" prefWidth="140.0" text="Enter your username :" />
-      <Label layoutX="28.0" layoutY="120.0" prefHeight="30.0" prefWidth="140.0" text="Enter your password :" />
-      <TextField fx:id="user" layoutX="168.0" layoutY="78.0" />
-      <PasswordField fx:id="pass" layoutX="168.0" layoutY="123.0" />
-      <Button fx:id="logIn" layoutX="265.0" layoutY="170.0" mnemonicParsing="false" onAction="#logInAct" text="Log In" />
-      <Button fx:id="exitMain" layoutX="28.0" layoutY="170.0" mnemonicParsing="false" onAction="#exitProgram" text="Exit" />
+      <Label layoutX="249.0" layoutY="158.0" prefHeight="25.0" prefWidth="175.0" style="-fx-border-color: #326ba8;" text="Enter your username :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Label>
+      <Label layoutX="249.0" layoutY="199.0" prefHeight="30.0" prefWidth="175.0" style="-fx-border-color: #326ba8;" text="Enter your password :" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Label>
+      <TextField fx:id="user" layoutX="438.0" layoutY="158.0" prefHeight="25.0" prefWidth="127.0" />
+      <PasswordField fx:id="pass" layoutX="438.0" layoutY="202.0" prefHeight="25.0" prefWidth="127.0" />
+      <Button fx:id="logIn" layoutX="498.0" layoutY="247.0" mnemonicParsing="false" onAction="#logInAct" prefHeight="30.0" prefWidth="67.0" style="-fx-background-color: grey; -fx-background-radius: 60;" text="Log In" />
+      <AnchorPane prefHeight="402.0" prefWidth="225.0" style="-fx-background-color: lightslategrey;">
+         <children>
+            <Label alignment="CENTER" layoutX="33.0" layoutY="24.0" prefHeight="90.0" prefWidth="160.0" text="HOSPITAL">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="19.0" layoutY="133.0" prefHeight="136.0" prefWidth="189.0" text="INFORMATION SYSTEM">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Button fx:id="exitMain" layoutX="518.0" layoutY="358.0" mnemonicParsing="false" onAction="#exitProgram" prefHeight="30.0" prefWidth="47.0" style="-fx-background-color: grey; -fx-background-radius: 60;" text="Exit" />
    </children>
 </AnchorPane>

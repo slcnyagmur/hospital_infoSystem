@@ -1,24 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="adminAnchor" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.AdminScreenController">
+<AnchorPane id="AnchorPane" fx:id="adminAnchor" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1d1d1d;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainPackage.AdminScreenController">
    <children>
-      <Label alignment="CENTER" layoutX="260.0" layoutY="63.0" prefHeight="30.0" prefWidth="140.0" text="User Operations" />
-      <Label alignment="CENTER" layoutX="14.0" layoutY="63.0" prefHeight="30.0" prefWidth="140.0" text="Information Block" />
-      <VBox layoutX="34.0" layoutY="110.0" prefHeight="120.0" prefWidth="200.0">
+      <Label alignment="CENTER" layoutX="393.0" layoutY="55.0" prefHeight="30.0" prefWidth="140.0" text="User Operations" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Label>
+      <Label alignment="CENTER" layoutX="393.0" layoutY="185.0" prefHeight="30.0" prefWidth="140.0" text="Information Block" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font></Label>
+      <VBox layoutX="363.0" layoutY="225.0" prefHeight="120.0" prefWidth="200.0">
          <children>
-            <Button fx:id="gender" layoutX="10.0" layoutY="50.0" mnemonicParsing="false" onAction="#importGender" prefHeight="40.0" prefWidth="200.0" text="Import gender chart " />
-            <Button fx:id="age" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#importAge" prefHeight="40.0" prefWidth="200.0" text="Import age chart" />
-            <Button fx:id="recipeType" mnemonicParsing="false" onAction="#importRecipeType" prefHeight="40.0" prefWidth="200.0" text="Import recipe type chart" />
+            <Button fx:id="gender" layoutX="10.0" layoutY="50.0" mnemonicParsing="false" onAction="#importGender" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #326ba8;" text="Import gender chart " />
+            <Button fx:id="age" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#importAge" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #326ba8;" text="Import age chart">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="recipeType" mnemonicParsing="false" onAction="#importRecipeType" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #326ba8;" text="Import recipe type chart">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin></Button>
          </children>
       </VBox>
-      <Button fx:id="exit" layoutX="330.0" layoutY="230.0" mnemonicParsing="false" onAction="#exitAdminAct" text="Exit" />
-      <Label alignment="CENTER" layoutX="100.0" layoutY="33.0" prefHeight="30.0" prefWidth="200.0" text="ADMINISTRATOR " />
-      <Button fx:id="insertDelete" layoutX="270.0" layoutY="150.0" mnemonicParsing="false" onAction="#adminUserAct" prefHeight="40.0" prefWidth="121.0" text="Insert/Delete User" />
+      <Button fx:id="exit" layoutX="539.0" layoutY="355.0" mnemonicParsing="false" onAction="#exitAdminAct" prefHeight="30.0" prefWidth="47.0" style="-fx-background-color: grey; -fx-background-radius: 60;" text="Exit" />
+      <Label alignment="CENTER" layoutX="200.0" layoutY="14.0" prefHeight="35.0" prefWidth="225.0" text="ADMINISTRATOR " textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
+      <Label fx:id="medicineInfo" alignment="CENTER" layoutX="14.0" layoutY="55.0" prefHeight="290.0" prefWidth="200.0" style="-fx-border-color: #326ba8;" text="All is well..." textFill="#326ba8">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font></Label>
+      <Button fx:id="order" layoutX="14.0" layoutY="355.0" mnemonicParsing="false" onAction="#orderMedicine" prefHeight="30.0" prefWidth="47.0" style="-fx-background-color: grey; -fx-background-radius: 60;" text="Order" />
+      <VBox layoutX="363.0" layoutY="85.0" prefHeight="105.0" prefWidth="200.0">
+         <children>
+            <Button fx:id="userHours" mnemonicParsing="false" onAction="#importHours" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #326ba8;" text="Import Hours">
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="userScores" mnemonicParsing="false" onAction="#importScores" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #326ba8;" text="Import User Scores">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
